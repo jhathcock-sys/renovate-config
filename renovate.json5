@@ -1,0 +1,113 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  description: "Central Renovate configuration presets for Antigravity fleet repositories",
+  extends: [
+    "config:best-practices",
+    ":dependencyDashboard"
+  ],
+  timezone: "America/New_York",
+  // Noise-free schedule: Monday morning before workday
+  schedule: ["before 5am on monday"],
+  // Supply chain attack mitigation: wait 3 days after release before opening PR
+  minimumReleaseAge: "3 days",
+  prConcurrentLimit: 5,
+  packageRules: [
+    // 1) Vite, Rollup & Vitest ecosystem
+    {
+      description: "Vite, Rollup & Vitest ecosystem",
+      matchPackageNames: [
+        "vite*",
+        "@vitejs/*",
+        "rollup*",
+        "@rollup/*",
+        "vitest*",
+        "@vitest/*"
+      ],
+      groupName: "Vite, Rollup & Vitest ecosystem"
+    },
+    // 2) React & TypeScript core
+    {
+      description: "React & TypeScript core",
+      matchPackageNames: [
+        "react*",
+        "@types/react*",
+        "typescript"
+      ],
+      groupName: "React & TypeScript core"
+    },
+    // 3) Styling & UI
+    {
+      description: "Styling & UI",
+      matchPackageNames: [
+        "tailwindcss*",
+        "postcss*",
+        "lucide-react",
+        "@radix-ui/*"
+      ],
+      groupName: "Styling & UI"
+    },
+    // 4) Firebase & Google Cloud
+    {
+      description: "Firebase & Google Cloud",
+      matchPackageNames: [
+        "firebase*",
+        "@google/*",
+        "@google-cloud/*"
+      ],
+      groupName: "Firebase & Google Cloud"
+    },
+    // 5) Linting & QA Tooling
+    {
+      description: "Linting & QA Tooling",
+      matchPackageNames: [
+        "oxlint*",
+        "eslint*",
+        "@typescript-eslint/*",
+        "@playwright/*",
+        "husky",
+        "secretlint*"
+      ],
+      groupName: "Linting & QA Tooling"
+    },
+    // 6) Python & Container Digests
+    {
+      description: "Python & Container Digests",
+      matchManagers: [
+        "dockerfile",
+        "docker-compose",
+        "pip_requirements",
+        "pep621"
+      ],
+      groupName: "Python & Container Digests"
+    },
+    // 7) Safe automerge ONLY for patch, pin, and digest updates (after 3-day release age)
+    {
+      description: "Safe automerge for patch, pin, and digest updates",
+      matchUpdateTypes: [
+        "patch",
+        "pin",
+        "digest"
+      ],
+      automerge: true,
+      platformAutomerge: true
+    },
+    {
+      description: "Explicitly disable automerge for minor updates",
+      matchUpdateTypes: [
+        "minor"
+      ],
+      automerge: false
+    },
+    {
+      description: "Explicitly disable automerge for major updates",
+      matchUpdateTypes: [
+        "major"
+      ],
+      automerge: false,
+      labels: [
+        "deps: major",
+        "breaking"
+      ]
+    }
+  ]
+}

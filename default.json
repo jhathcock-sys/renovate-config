@@ -1,0 +1,104 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Central Renovate configuration presets for Antigravity fleet repositories",
+  "extends": [
+    "config:best-practices",
+    ":dependencyDashboard"
+  ],
+  "timezone": "America/New_York",
+  "schedule": ["before 5am on monday"],
+  "minimumReleaseAge": "3 days",
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "description": "1) Vite, Rollup & Vitest ecosystem",
+      "matchPackageNames": [
+        "vite*",
+        "@vitejs/*",
+        "rollup*",
+        "@rollup/*",
+        "vitest*",
+        "@vitest/*"
+      ],
+      "groupName": "Vite, Rollup & Vitest ecosystem"
+    },
+    {
+      "description": "2) React & TypeScript core",
+      "matchPackageNames": [
+        "react*",
+        "@types/react*",
+        "typescript"
+      ],
+      "groupName": "React & TypeScript core"
+    },
+    {
+      "description": "3) Styling & UI",
+      "matchPackageNames": [
+        "tailwindcss*",
+        "postcss*",
+        "lucide-react",
+        "@radix-ui/*"
+      ],
+      "groupName": "Styling & UI"
+    },
+    {
+      "description": "4) Firebase & Google Cloud",
+      "matchPackageNames": [
+        "firebase*",
+        "@google/*",
+        "@google-cloud/*"
+      ],
+      "groupName": "Firebase & Google Cloud"
+    },
+    {
+      "description": "5) Linting & QA Tooling",
+      "matchPackageNames": [
+        "oxlint*",
+        "eslint*",
+        "@typescript-eslint/*",
+        "@playwright/*",
+        "husky",
+        "secretlint*"
+      ],
+      "groupName": "Linting & QA Tooling"
+    },
+    {
+      "description": "6) Python & Container Digests",
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose",
+        "pip_requirements",
+        "pep621"
+      ],
+      "groupName": "Python & Container Digests"
+    },
+    {
+      "description": "7a) Safe automerge ONLY for patch, pin, and digest updates (after 3-day release age)",
+      "matchUpdateTypes": [
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "automerge": true,
+      "platformAutomerge": true
+    },
+    {
+      "description": "7b) Explicitly disable automerge for minor updates",
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "7c) Explicitly disable automerge for major updates",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false,
+      "labels": [
+        "deps: major",
+        "breaking"
+      ]
+    }
+  ]
+}
