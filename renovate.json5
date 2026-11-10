@@ -108,6 +108,15 @@
         "deps: major",
         "breaking"
       ]
+    },
+    // 8) Pre-1.0 packages may introduce breaking changes on minor/patch
+    {
+      description: "Pre-1.0 packages may break in minor or patch updates: explicitly disable automerge",
+      matchCurrentVersion: "/^0\\./",
+      automerge: false,
+      labels: [
+        "deps: pre-1.0"
+      ]
     }
   ]
 }
